@@ -45,23 +45,28 @@ def getSocket(address, port):
             s.close()
         print("Error opening client socket: " + str(message))
         sys.exit(1)
+    print("Client socket opened")
     return s
 
 
 def getAnswer(question, address, port):
     soc = getSocket(address, port)
+    print("Client sending question: " + question)
     soc.send(getPayload(question))
     answers = []
     answerPayload = soc.recv(1024)
     answertext = getText(answerPayload)
     answers.append(answertext)
+    print("Client recieved answer: " + answertext)
     try:
         while 1:
             answerPayload = soc.recv(1024)
             answertext = getText(answerPayload)
             answers.append(answertext)
+            print("Client recieved answer: " + answertext)
     except:
         soc.close()
+        print("Client socket closed")
     if answers:
         return answers
     else:
