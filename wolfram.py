@@ -22,28 +22,33 @@ def wolframQuery(query):
     else:
         print("[DBG] Got answer back.")
 
-        # get answer from wolfram alpha
         try:
+            # parse answer from wolfram alpha
             results, = answerPackage.results
         except AttributeError:
             return ["[ERR] Wolfram Alpha did not understand your query."]
+        except ValueError:
+            return ["[ERR] Wolfram Alpha did not have a suitable short, textual answer to your question."]
         else:
             print("[DBG] Extracting results.")
             # Extract the actual text of the answer
             answer = results.text
 
-            # Split multiple answers
-            answerList = re.split("\n[0-9] \| ", answer)
+            if(answer != None):
+                # Split multiple answers
+                answerList = re.split("\n[0-9] \| ", answer)
 
-            # Put the numbers back on the front of the multiple answers that split() removed
-            i = 1
-            for multAnswer in answerList:
-                if(i > 1):
-                    answerList[i - 1] = (str(i) + " | " + multAnswer)
-                i = i + 1;
+                # Put the numbers back on the front of the multiple answers that split() removed
+                i = 1
+                for multAnswer in answerList:
+                    if(i > 1):
+                        answerList[i - 1] = (str(i) + " | " + multAnswer)
+                    i = i + 1;
 
-            # Return the complete list of answers
-            return answerList
+                # Return the complete list of answers
+                return answerList
+            else:
+                return ["[ERR] Wolfram Alpha did not have a suitable textual answer to your questions."]
 
 while(1):
     answers = wolframQuery(input("Please ask a question: "))
