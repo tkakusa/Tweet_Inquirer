@@ -6,6 +6,7 @@ Server for assignment 1
 import pickle
 import hashlib
 import wolframalpha
+import re
 import socket
 import sys
 
@@ -86,7 +87,7 @@ while 1:
         question = getText(data)
         if question:
             print("Server received question: " + question)
-            answerList = {"Here's the first answer", "Here's a second answer"} #replace with wolfram call
+            answerList = wolframQuery(question)
             for answer in answerList:
                 print("Server sending answer:" + answer)
                 answerPld = getPayload(answer)
