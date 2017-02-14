@@ -94,7 +94,9 @@ class listener(StreamListener):
         answer = getAnswer(str(question), str(ipaddr), int(portaddr))
         print ('Got the Answer')
         for tweet in answer:
-            api.update_status('@drewrepp Team_03 "' + tweet +'"')
+            response = '@VTNetApps Team_03 "' + tweet +'"'
+            shortened = response[:130] + (response[130:] and '..')
+            api.update_status(shortened)
         return True
 
     def on_error(self, status):
