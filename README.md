@@ -22,5 +22,5 @@ The necessary external python libraries for the server machine are:
   socket
   sys
   
-  The question tweet must be in the following format: 
+  The question must come from the account           and be in the following format: 
   The answer will be tweeted at the VTNetApps account.
